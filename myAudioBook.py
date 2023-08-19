@@ -13,6 +13,7 @@ root.geometry('400x300')
 file = []
 
 def select_file():
+    file.clear()
     file_path = fd.askopenfilename()
     file.append(file_path)
     if file_path == '':
@@ -22,7 +23,6 @@ def convert():
     text = epub.epub2txt(file[0])
     engine = pyttsx3.init()
     engine.save_to_file(text,'NewAudioBook.mp3')
-    file = []
     engine.runAndWait()
 
 def read():
