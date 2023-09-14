@@ -11,6 +11,7 @@ root.title('Narrator')
 root.geometry('400x300')
 
 file = []
+engine = None
 
 def select_file():
     file.clear()
@@ -20,19 +21,23 @@ def select_file():
         print ('Error: No file selected')
 
 def convert():
+    global engine
     text = epub.epub2txt(file[0])
     engine = pyttsx3.init()
     engine.save_to_file(text,'NewAudioBook.mp3')
     engine.runAndWait()
 
 def read():
+    global engine
     text = epub.epub2txt(file[0])
     engine = pyttsx3.init()
     engine.say(text)
+    engine.runAndWait()
     
 def stop():
-    engine = pyttsx3.init()
-    engine.stop()
+    global engine
+    if engine:
+        engine.stop()
     
 # Buttons
 tk.Button(text= ('Open'),
