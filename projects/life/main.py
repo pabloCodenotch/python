@@ -140,6 +140,14 @@ def main():
             dinosaur.position = position
             all_animals.append(dinosaur)
 
+    def grow():
+        for terrain in terrain_grid:
+            if isinstance (terrain, Field):
+                terrain.grow_grass()
+            elif isinstance (terrain, Forest):
+                terrain.grow_leaf()
+            else:
+                pass
     gen_animals()
 
     WINDOW.fill(colors['BLACK'])
@@ -160,6 +168,7 @@ def main():
 
     
         for event in pygame.event.get():
+            # Quit game
             if event.type == pygame.QUIT:
                 running = False
 
@@ -169,11 +178,11 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     playing = not playing
-
+                # ERASE ALL THE ANIMALS
                 if event.key == pygame.K_c:
                     all_animals = []
                     count = 0
-
+                # GEN ANIMALS AGAIN
                 if event.key == pygame.K_b:
                     all_animals = []
                     gen_animals()
@@ -185,13 +194,14 @@ def main():
                     draw_grid(terrain_grid)
                     pygame.display.flip()  
 
-
-            WINDOW.fill(colors['BLACK'])  
-            draw_grid(terrain_grid)  
+        WINDOW.fill(colors['BLACK'])
+        draw_grid(terrain_grid)
+        grow()
+        if count % 2 == 0:
             for dinosaur in all_animals:
-                dinosaur.move(terrain_grid, all_animals)
+                dinosaur.move(terrain_grid, dinosaur)
             draw_animal_moves(terrain_grid, all_animals)
-            pygame.display.update()  
+        pygame.display.update()  
             
     pygame.quit()
 
