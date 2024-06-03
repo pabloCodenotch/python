@@ -109,14 +109,6 @@ def draw_animal_moves(terrain_grid, all_animals):
             elif dinosaur.diet == 'meat':
                 pygame.draw.rect(WINDOW, dino_colors['RED'], (*top_left, TILE_SIZE, TILE_SIZE))
 
-#    for dinosaur in all_animals:
-#        col, row = dinosaur.position
-#        top_left = (col * TILE_SIZE, row * TILE_SIZE)
-#        if dinosaur.diet == 'plants':
-#            pygame.draw.rect(WINDOW, dino_colors['ORANGE'], (*top_left, TILE_SIZE, TILE_SIZE)) 
-#        elif dinosaur.diet == 'meat':
-#            pygame.draw.rect(WINDOW, dino_colors['RED'], (*top_left, TILE_SIZE, TILE_SIZE))
-
                 
 
 

@@ -1,7 +1,7 @@
 import random
+import uuid
 from constants import GRID_HEIGHT, GRID_WIDTH
-from enviroment import Mountain, Water
-
+from enviroment import *
 class Dinosauria:
     def __init__(self) -> None:
         self.size = int
@@ -29,13 +29,16 @@ class Dinosauria:
             self.__corpse = False
     
     def eat(self):
-        pass # Waiting to code food mechanic
+        if isinstance(self, Carnivore):
+            if Dinosauria.corpse is True:#Los carnívoros usaran el valor de la mitad de su tamaño redondeado hacia arriba para consumir el cadaver de otro dinosaurio hasta el total de dicho dinosaurio.
+                pass
+         # Waiting to code food mechanic
 
     def starve(self):
         if self.hunger == self.food:
             self.death()
         elif self.hunger > self.food / 2:
-            self.eat()
+            self.eat(self.position)
         else:
             pass
     
@@ -47,8 +50,9 @@ class Dinosauria:
         (x, y) = new_position
             
         if self.hunger > self.food / 4:
-            pass
-        if self.is_valid_move(new_position, terrain_grid, all_animals):
+            if (isinstance(terrain_grid[self.position],(Field, Forest)) or Dinosauria.corpse):
+                self.eat(self.position)
+        elif self.is_valid_move(new_position, terrain_grid, all_animals):
             #move = list(self.position)
             #move[0], move[1] = x, y
             #self.position = tuple(move)
@@ -92,6 +96,7 @@ class Carnivore(Dinosauria):
 class Iguanodon(Hervibore):
     def __init__(self) -> None:
         super().__init__()
+        self.id = 'Igua-' + str(uuid.uuid4())
         self.size = 2
         self.name = "Iguanodon"
         self.food = 30
@@ -102,6 +107,7 @@ class Iguanodon(Hervibore):
 class Compsognathus(Carnivore):
     def __init__(self) -> None:
         super().__init__()
+        self.id = 'Compy-' + str(uuid.uuid4())
         self.size = 1
         self.name = "Compy"
         self.food = 5
